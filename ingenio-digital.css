@@ -1,0 +1,24 @@
+.digital-header { border-bottom: 1px solid var(--line); background: #111; }
+.digital-header nav { justify-content: flex-start; flex-wrap: wrap; gap: clamp(12px, 4vw, 32px); min-height: 64px; }
+.digital-header nav a:hover, footer a:hover { text-decoration: underline; }
+.digital-brand { margin-right: auto; font-weight: 900; letter-spacing: .08em; border-left: 4px solid var(--accent); padding-left: 9px; }
+.digital-cover { padding-block: clamp(56px, 9vw, 118px); border-bottom: 5px solid var(--accent); background: linear-gradient(115deg, #141414 55%, #3f0e15); }
+.digital-cover h1 { font: italic 900 clamp(48px, 10vw, 124px)/.9 var(--display); text-transform: uppercase; margin: 0 0 20px; }
+.digital-cover h1 em { color: #ff5d66; }
+.digital-cover p { max-width: 57ch; margin-bottom: 24px; }
+.digital-section { padding-block: clamp(44px, 7vw, 80px); }
+.digital-demos, .digital-catalog { display: grid; gap: 16px; }
+.digital-demos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.digital-catalog { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.digital-demos .tile { display: flex; flex-direction: column; align-items: flex-start; }
+.digital-demos .tile p { margin-bottom: 18px; }
+.digital-demos .btn { margin-top: auto; }
+footer.wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-block: 24px; }
+@media (max-width: 740px) {
+  .digital-catalog { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .digital-demos, .digital-catalog { grid-template-columns: 1fr; }
+}
+
+.digital-catalog .btn { margin-top: 16px; }

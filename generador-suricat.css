@@ -1,0 +1,69 @@
+.gen { padding-block: 12px 50px; }
+.gen nav { min-height: 52px; justify-content: space-between; border-bottom: 1px solid var(--line); }
+.gen nav a { text-decoration: underline; }
+.gen h1 { font: 900 clamp(42px, 9vw, 88px)/1 var(--display); letter-spacing: .06em; margin: 26px 0 8px; }
+.gen h2 { margin: 0; }
+.gen-controls { display: flex; flex-wrap: wrap; gap: 10px; margin-block: 20px; }
+.gen button { padding: 10px 16px; background: #a91420; color: white; font: inherit; border: 1px solid #ef6b73; cursor: pointer; }
+.gen-flow, .gen-columns, .gen-kpis { display: grid; gap: 12px; }
+.gen-flow { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.gen-flow > div, .gen-columns > section { background: #202020; padding: 16px; border: 1px solid #555; }
+.gen-flow > div[data-active="true"] { border-left: 4px solid #ff3444; }
+.gen-flow span { display: block; }
+.gen-columns { grid-template-columns: 1fr 1.3fr; margin-top: 15px; }
+.gen-columns section { min-width: 0; }
+.gen-columns h3 { margin-top: 0; }
+.gen-columns label { display: flex; align-items: center; gap: 8px; min-height: 36px; }
+.gen input { accent-color: #d72636; }
+.gen-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; }
+.gen-kpis > div { padding: 8px; border-top: 2px solid #c90f1c; background: #151515; }
+.gen-kpis dt, .gen-note { color: #ccc; font-size: .9rem; }
+.gen-kpis dd { margin: 0; font-size: 1.25rem; font-weight: 800; }
+#events { border: 1px solid #555; min-height: 84px; padding: 12px 30px; }
+@media (max-width: 650px) {
+  .gen-flow, .gen-columns { grid-template-columns: 1fr; }
+}
+.gen-controls { align-items: center; }
+.gen-controls select { padding: 8px; background: #252525; color: white; font: inherit; }
+.gen button:disabled { opacity: .45; cursor: default; }
+.gen-rotor {
+  width: 42px; height: 42px; margin: 8px 0;
+  border: 4px solid #858585; border-radius: 50%;
+  background: conic-gradient(#dd2837 0 15%, #181818 15% 50%, #dd2837 50% 65%, #181818 65%);
+}
+.gen-rotor[data-spin=true] { animation: gen-spin .65s linear infinite; }
+@keyframes gen-spin { to { transform: rotate(360deg); } }
+.gen-switch { color: #ff9a9a; font-weight: 800; }
+.gen-switch[data-closed=true] { color: #aaf6c3; }
+.gen-bus, .gen-feeder { padding: 8px 12px; background: #262626; }
+.gen-bus { border-top: 4px solid #888; }
+.gen-bus[data-live=true] { border-color: #79dca0; }
+.gen-feeder { border-top: 1px solid #555; }
+@media(prefers-reduced-motion:reduce) { .gen-rotor[data-spin=true] { animation: none; } }
+
+.gen-machine {
+  display:flex; align-items:center; gap:0; width:max-content; max-width:100%;
+  margin:12px 0; padding:7px 7px 10px;
+  border-bottom:5px solid #626262; background:#111; border-radius:5px;
+}
+.gen-engine,.gen-alternator { display:block; height:36px; border:1px solid #818181; }
+.gen-engine { width:50px; border-radius:5px 0 0 5px; background:repeating-linear-gradient(0deg,#75242a 0 4px,#a63b44 4px 6px); }
+.gen-alternator { width:34px; border-radius:0 5px 5px 0; background:repeating-linear-gradient(90deg,#494949 0 5px,#757575 5px 7px); }
+.gen-machine .gen-rotor { width:34px; height:34px; margin:0 2px; flex:none; }
+.gen-scope { padding:16px; margin-block:16px; border:1px solid #555; background:#202020; }
+.gen-scope h3 { margin:0; }
+.gen-scope p { margin:.6rem 0; }
+.scope-controls { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-bottom:10px; }
+.scope-controls select { background:#151515; color:#fff; padding:6px; font:inherit; max-width:100%; }
+#scope { display:block; width:100%; height:clamp(175px,30vw,265px); background:#090d0e; }
+#scope-readings { font-variant-numeric:tabular-nums; }
+
+#triangle { display:block; width:100%; height:210px; margin-top:12px; background:#090d0e; }
+#sequence { padding:12px; border-left:4px solid #ef4753; background:#222; }
+
+.gen-transfer { display:grid; gap:10px; margin-block:12px; padding:14px; background:#202020; }
+.gen-transfer p, .gen-flow p { margin:0; }
+.gen-meter, .gen-share { display:block; margin-top:8px; font-size:.9rem; }
+.gen-meter strong, .gen-share output { float:right; font-variant-numeric:tabular-nums; }
+.gen-meter meter, .gen-meter progress, .gen-share input { display:block; width:100%; height:18px; accent-color:#71deb0; }
+.gen-share input:disabled { opacity:.55; }

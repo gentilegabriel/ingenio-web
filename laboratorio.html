@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Laboratorio industrial | Ingenio Digital</title>
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="rendimiento.css">
+<link rel="stylesheet" href="laboratorio.css">
+<script type="module" src="laboratorio.js"></script>
+<link rel="stylesheet" href="guias-demos.css">
+</head>
+<body>
+<main class="wrap lab">
+<nav aria-label="Navegación"><a href="ingenio-digital.html#catalogo">← Ingenio Digital</a></nav>
+<h1 id="title">Laboratorio industrial</h1>
+<div id="device-picker" hidden>
+<label for="device">Equipo de referencia</label>
+<select id="device"></select>
+<p id="device-description"></p>
+</div>
+<p id="guide"></p>
+<div class="lab-grid">
+<div class="lab-panel"><h2>Controles</h2><div id="controls"></div><button class="btn secondary" id="reset" type="button">Reiniciar práctica</button></div>
+<div class="lab-panel"><h2>Indicadores</h2><dl id="readings"></dl><p id="status" role="status"></p><canvas id="trend" width="640" height="200" aria-label="Tendencia del indicador a lo largo de la simulación"></canvas><p id="legend"></p></div>
+</div>
+<aside class="demo-guide demo-quote"><h2>Aplicalo a tu instalación</h2><p>Contanos qué querés medir, automatizar o mejorar.</p><div class="actions"><a class="btn" id="lab-quote" href="https://wa.me/5492994535615?text=Hola%20INGENIO%2C%20prob%C3%A9%20la%20demo%20y%20quiero%20cotizar%20instrumentaci%C3%B3n%2C%20calibraci%C3%B3n%20o%20integraci%C3%B3n%20de%20transmisores.">Pedir cotización por WhatsApp</a></div></aside>
+<p class="lab-note">Los equipos nombrados son referencias. Los rangos, las señales y los registros de esta demo son didácticos y pueden variar según la configuración del modelo.</p>
+<noscript>Activá JavaScript para usar el laboratorio.</noscript>
+</main>
+</body>
+</html>

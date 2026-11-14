@@ -1,0 +1,23 @@
+.lab {padding-bottom:48px}
+.lab nav a {text-decoration:underline}
+.lab h1 {font:900 italic clamp(38px,7vw,74px)/1 var(--display);margin:16px 0}
+.lab-grid {display:grid;grid-template-columns:1fr 1.35fr;gap:16px;margin-top:22px}
+.lab-panel {min-width:0;padding:clamp(12px,3vw,24px);background:#202020;border:1px solid #555;border-top:3px solid var(--accent)}
+.lab-panel h2 {margin-top:0}
+#controls label {display:block;margin-bottom:15px}
+#controls output {float:right;font-weight:750}
+#controls input[type=range] {display:block;width:100%;accent-color:#ef5360}
+#controls input[type=checkbox] {margin-right:8px;accent-color:#ef5360}
+.lab button {font:inherit;cursor:pointer}
+#readings {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#readings div {padding:8px;background:#151515;border-top:2px solid #e54854;overflow-wrap:anywhere}
+#readings dd {margin:0;font-weight:800;font-size:1.15rem}
+#trend {display:block;width:100%;height:160px;background:#111}
+#status {min-height:2.8em}
+.lab-note,#legend {color:#ccc;font-size:.9rem}
+@media(max-width:700px) {.lab-grid{grid-template-columns:1fr}}
+
+#device-picker { margin-block:18px; padding:12px; background:#202020; border:1px solid #555; }
+#device-picker label { display:block; margin-bottom:5px; font-weight:750; }
+#device { width:min(100%,560px); padding:8px; color:white; background:#161616; font:inherit; }
+#device-description { margin:8px 0 0; color:#ddd; }

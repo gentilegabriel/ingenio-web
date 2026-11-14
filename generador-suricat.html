@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SURICAT | Simulador de grupo electrógeno</title>
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="rendimiento.css">
+<link rel="stylesheet" href="generador-suricat.css">
+<script type="module" src="generador-suricat.js"></script>
+<link rel="stylesheet" href="guias-demos.css">
+</head>
+<body>
+<main class="wrap gen">
+<nav aria-label="Simuladores"><a href="./">INGENIO</a><a href="ingenio-digital.html#demos">Ingenio Digital</a></nav>
+<h1>SURICAT</h1>
+<h2>Grupo electrógeno y transferencia</h2>
+<p>Simulá un corte de red, elegí las cargas y seguí la transferencia automática. El generador de ejemplo entrega hasta 80 kW a 50 Hz.</p>
+
+<aside class="demo-guide" aria-labelledby="gen-guide-title">
+<h3 id="gen-guide-title">Asistente de la demo</h3>
+<p id="gen-guide-state" role="status">Tocá «Simular corte» para empezar. La red está alimentando el edificio.</p>
+<details><summary>Ver guía paso a paso</summary><ol><li>Tocá <strong>Simular corte</strong>. Verás cómo arranca G1 y cuándo vuelve a tener energía el edificio.</li><li>En <a href="#loads-title">Cargas del edificio</a>, tildá <strong>Climatización</strong> para sumar consumo. Con las cargas iniciales, arranca G2.</li><li>Cuando ambos grupos estén conectados, mové <strong>Aporte de G1</strong> o <strong>Aporte de G2</strong> para cambiar quién entrega más potencia.</li><li>Tocá <strong>Restablecer red</strong> y mirá las barras de transferencia: la red toma la carga y después los grupos se enfrían.</li></ol></details>
+</aside>
+<div class="gen-controls">
+<button type="button" id="red">Simular corte</button>
+<label>Retorno <select id="mode"><option value="open">Transferencia abierta</option><option value="closed" selected>Paralelo breve con red</option></select></label>
+<button type="button" id="g2">Arrancar G2 en paralelo</button>
+<button type="button" id="reset">Reiniciar</button>
+</div>
+<p id="sequence" role="status"></p>
+<div class="gen-flow" aria-label="Esquema unifilar simulado">
+  <div id="grid-card"><strong>Red</strong><span id="grid-status"></span><span class="gen-switch" id="q-grid"></span><span id="meter-grid"></span></div>
+  <div id="motor-card"><strong>Grupo G1</strong><div class="gen-machine" aria-hidden="true"><span class="gen-engine"></span><span class="gen-rotor" id="rotor1"></span><span class="gen-alternator"></span></div><span id="motor-status"></span><span class="gen-switch" id="q-g1"></span><span id="meter-g1"></span>
+    <p id="g1-electric"></p>
+    <label class="gen-meter">Potencia de G1 <strong id="g1-kw"></strong>
+      <meter id="g1-power" min="0" max="80" value="0"></meter>
+    </label>
+    <label class="gen-share">Aporte de G1 <output id="share1-value"></output>
+      <input type="range" id="share1" min="0" max="100" value="50" step="1">
+    </label></div>
+  <div id="second-card"><strong>Grupo G2</strong><div class="gen-machine" aria-hidden="true"><span class="gen-engine"></span><span class="gen-rotor" id="rotor2"></span><span class="gen-alternator"></span></div><span id="second-status"></span><span class="gen-switch" id="q-g2"></span><span id="meter-g2"></span>
+    <p id="g2-electric"></p>
+    <label class="gen-meter">Potencia de G2 <strong id="g2-kw"></strong>
+      <meter id="g2-power" min="0" max="80" value="0"></meter>
+    </label>
+    <label class="gen-share">Aporte de G2 <output id="share2-value"></output>
+      <input type="range" id="share2" min="0" max="100" value="50" step="1">
+    </label></div>
+</div>
+<div class="gen-bus" id="bus"><strong>Barra común</strong> <span id="bus-status"></span></div>
+<div class="gen-feeder"><span class="gen-switch" id="q-load"></span><strong> Línea de carga</strong> <span id="meter-load"></span></div>
+<div class="gen-transfer">
+  <label class="gen-meter">Carga tomada por la red <strong id="grid-kw"></strong><progress id="grid-transfer" max="100" value="100"></progress></label>
+  <label class="gen-meter">Carga sostenida por los grupos <strong id="groups-kw"></strong><progress id="groups-transfer" max="100" value="0"></progress></label>
+  <p id="transfer-note"></p>
+</div>
+<p id="sync"></p>
+<section class="gen-scope" aria-labelledby="scope-title">
+<h3 id="scope-title">Osciloscopio trifásico</h3>
+<p>Una traza por fuente con tensión. Durante el sincronismo, las ondas se dibujan sobre el mismo eje para ver cómo se superponen.</p>
+<div class="scope-controls"><label>Fase <select id="scope-phase"><option value="0">R</option><option value="1">S</option><option value="2">T</option></select></label></div>
+<canvas id="scope" aria-label="Ondas de tensión de red, G1 y G2 para la fase seleccionada"></canvas>
+<p id="scope-readings"></p>
+</section>
+<div class="gen-columns">
+<section aria-labelledby="loads-title">
+<h3 id="loads-title">Cargas del edificio</h3>
+<label><input type="checkbox" checked value="8" data-pf="0.98"> Iluminación LED · 8 kW · FP 0,98</label>
+<label><input type="checkbox" checked value="18" data-pf="0.78"> Bombas inductivas · 18 kW · FP 0,78</label>
+<label><input type="checkbox" checked value="14" data-pf="0.88"> Ascensores · 14 kW · FP 0,88</label>
+<label><input type="checkbox" value="25" data-pf="0.87"> Climatización · 25 kW · FP 0,87</label>
+<label><input type="checkbox" value="12" data-pf="1"> Calefacción resistiva · 12 kW · FP 1</label>
+<label><input type="checkbox" value="20" data-pf="0.92"> Servicios auxiliares · 20 kW · FP 0,92</label>
+<label><input type="checkbox" value="0" data-pf="1" data-kvar="-15"> Banco capacitivo · −15 kvar</label>
+<p id="load-status"></p>
+</section>
+<section aria-labelledby="kpi-title">
+<h3 id="kpi-title">Indicadores de generación</h3>
+<dl class="gen-kpis">
+<div><dt>Potencia entregada</dt><dd id="kw"></dd></div>
+<div><dt>Carga de los grupos conectados</dt><dd id="percent"></dd></div>
+<div><dt>Frecuencia</dt><dd id="hz"></dd></div>
+<div><dt>Energía generada</dt><dd id="kwh"></dd></div>
+<div><dt>Combustible estimado</dt><dd id="fuel"></dd></div>
+<div><dt>Tiempo sin suministro</dt><dd id="outage"></dd></div>
+</dl>
+</section>
+</div>
+<section class="gen-scope" aria-labelledby="triangle-title">
+<h3 id="triangle-title">Triángulo de potencias de las cargas seleccionadas</h3>
+<dl class="gen-kpis">
+<div><dt>Activa P · trabajo útil</dt><dd id="active-power"></dd></div>
+<div><dt>Reactiva Q · campos eléctricos y magnéticos</dt><dd id="reactive-power"></dd></div>
+<div><dt>Aparente S · demanda eléctrica total</dt><dd id="apparent-power"></dd></div>
+<div><dt>Factor de potencia · cos φ</dt><dd id="power-factor"></dd></div>
+</dl>
+<canvas id="triangle" aria-label="Triángulo dinámico de potencia activa, reactiva y aparente"></canvas>
+</section>
+<aside class="demo-guide demo-quote"><h3>¿Qué necesitás respaldar en tu instalación?</h3><p>Elegí un grupo para tus cargas esenciales o consultá por una solución con varios grupos, transferencia y tableros.</p><div class="actions"><a class="btn" href="https://wa.me/5492994535615?text=Hola%20INGENIO%2C%20prob%C3%A9%20la%20demo%20y%20quiero%20cotizar%20un%20grupo%20electr%C3%B3geno%20New%20Holland%20con%20instalaci%C3%B3n.">Cotizar un generador New Holland</a><a class="btn" href="https://wa.me/5492994535615?text=Hola%20INGENIO%2C%20prob%C3%A9%20la%20demo%20y%20quiero%20cotizar%20un%20proyecto%20de%20grupos%20en%20paralelo%20con%20tableros%2C%20sincronismo%20y%20puesta%20en%20marcha.">Cotizar grupos en paralelo y tableros</a></div></aside><h3>Registro de eventos</h3>
+<ol id="events" role="log" aria-label="Eventos de transferencia"></ol>
+<p class="gen-note">Modelo didáctico de 400 V trifásicos con cargas equilibradas y factor de potencia variable. TV indica tensión entre fases y TI indica corriente de línea estimada. Cada grupo se modela con 80 kW, 100 kVA y 1.500 rpm en régimen. Durante el retorno cerrado, la red se sincroniza con la barra y toma la carga sin abrir la línea. G2 puede sincronizarse con G1 en isla y compartir la carga. Tiempos, lecturas y permisos de cierre simulados.</p>
+<noscript><p>Activá JavaScript para usar el simulador.</p></noscript>
+</main>
+</body>
+</html>
